@@ -240,8 +240,7 @@ Ordinary least squares regression is a method for fitting a linear regression mo
 $$ be a full-rank matrix of size $n\times p$ and $$
 \mathbf{y}=(Y_1, Y_2, \ldots,Y_n)^T,
 $$ be an $n\times 1$ vector of responses. It is common to assume that, $$ \mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}),
-$$
-where $\beta=(\beta_0,\beta_1,\ldots,\beta_{p-1})$ is a $p$-dimensional vector of constants.
+$$ where $\beta=(\beta_0,\beta_1,\ldots,\beta_{p-1})$ is a $p$-dimensional vector of constants.
 
 The matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. Because of what we know about linear functions of a multivariate normal random vector, we can determine that, $$
 \mathbf{Hy}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta},\sigma^2 \mathbf{H}).
