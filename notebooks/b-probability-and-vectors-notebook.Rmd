@@ -24,7 +24,7 @@ the outcomes are produced by a random experiment (defined below).
 The table below summarizes basic probability-related terminology.
 
 | term         | notation              | definition                                                                           |
-|:-------------|:-------------|:--------------------------------------------|
+|:---------------|:---------------|:----------------------------------------|
 | experiment   | N/A                   | A mechanism that produces outcomes that cannot be predicted with absolute certainty. |
 | outcome      | $\omega$              | The simplest kind of result produced by an experiment.                               |
 | sample space | $\Omega$              | The set of all possible outcomes an experiment can produce.                          |
@@ -394,7 +394,7 @@ mean and variance of $Y$.
 ### Example (Continuous bivariate distribution)
 
 Hydration is important for health. Like many people, the author has a
-water bottle he uses to say hydrated through the day and drinks several
+water bottle he uses to stay hydrated through the day and drinks several
 liters of water per day. Let's say the author refills his water bottle
 every 3 hours.
 
