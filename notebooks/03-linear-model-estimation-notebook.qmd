@@ -70,7 +70,7 @@ The outcome variable we are trying to predict is known as the **response variabl
 
 The variables available to model the response variable are known as **predictors variables**:
 
--   They are also called **explanatory**, **regressor**, **input**, **dependent** variables or simply as **features**.
+-   They are also called **explanatory**, **regressor**, **input**, **independent** variables or simply as **features**.
 -   Following the convention of Weisberg (2014), we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
 -   Every predictor can be a regressor but not all regressors are a predictor.
 -   The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
@@ -1520,7 +1520,7 @@ plot(penguins$bill_length_mm ~ fitted(lmods),
 An overview of terms used to define a linear model.
 
 | Term                 | Description                                                                 | Observable? | Random? |
-|:---------------------|:----------------------------------------------------------------------------|:------------|:--------|
+|:-----------|:-------------------------------------|:-----------|:-----------|
 | $Y$                  | response variable                                                           | Yes         | Yes     |
 | $Y_i$                | response value for the $i\text{th}$ observation                             | Yes         | Yes     |
 | $\mathbf{y}$         | the $n\times 1$ column vector of response values                            | Yes         | Yes     |
@@ -1539,7 +1539,7 @@ An overview of terms used to define a linear model.
 An overview of important functions discussed in this chapter.
 
 | Function    | Purpose                                                                        |
-|:------------|:-------------------------------------------------------------------------------|
+|:--------------|:--------------------------------------------------------|
 | `lm`        | Fits a linear model based on a provided `formula`                              |
 | `summary`   | Provides summary information about the fitted model                            |
 | `coef`      | Extracts the vector of estimated regression coefficients from the fitted model |
