@@ -2,13 +2,14 @@
 title: Chapter 3 - Linear Model Estimation
 author: Joshua French
 date: ''
-format: html
-# format: ipynb
-# jupyter: ir
-# execute: 
-#   enabled: false
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
+wrap: 'none'
 ---
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
@@ -105,6 +106,7 @@ Consider these potential "best fitting" lines that are drawn on the scatter plot
 ```{r}
 #| echo: false
 #| eval: true
+#| output: true
 lmod <- lm(y ~ x)
 coef_ls <- coef(lmod) # OLS estimates
 lad <- function(b) {
@@ -194,7 +196,7 @@ for $i=1$, $2$,$\ldots$,$n$, where $\epsilon_i$ denotes the error for observatio
 **Important terminology**
 ---
 
-The **estimated regression model** is defined as
+The **estimated regression model** or **fitted model** is defined as
 
 ::: {.content-visible unless-format="pdf"}
 </br>  
@@ -207,7 +209,7 @@ $$
 $$
 :::
 
-where $\hat{\beta}_j$ denotes the estimated value of $\beta_j$ for $j=0,1$.
+where $\hat{\beta}_0$ and $\hat{\beta}_1$ are the estimated value of our regression parameters.
 
 The $i\text{th}$ **fitted value** is defined as
 
@@ -296,7 +298,11 @@ In a simple linear regression context, the fitted model is known as the **line o
 
 **Visualizing terms**
 ---
-```{r echo=FALSE}
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
 set.seed(2)
 x <- c(3, 5, 7, 8, 9)
 y <- 2 + 2 * x + rnorm(5, sd = 4)
@@ -426,7 +432,7 @@ $$
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
--   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats:formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+-   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 
 ```{r}
 lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins) # fit model
