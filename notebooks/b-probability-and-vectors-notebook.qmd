@@ -26,7 +26,7 @@ Probability attempts to quantify how likely certain outcomes are, where the outc
 The table below summarizes basic probability-related terminology.
 
 | term         | notation              | definition                                                                           |
-|:-------------|:-------------|:--------------------------------------------|
+|:---------------|:---------------|:----------------------------------------|
 | experiment   | N/A                   | A mechanism that produces outcomes that cannot be predicted with absolute certainty. |
 | outcome      | $\omega$              | The simplest kind of result produced by an experiment.                               |
 | sample space | $\Omega$              | The set of all possible outcomes an experiment can produce.                          |
