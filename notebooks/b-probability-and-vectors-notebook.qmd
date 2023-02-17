@@ -252,7 +252,7 @@ $$
 \mathrm{var}(Y)&=
 E(Y^2)-[E(Y)]^2\\
 &=2\lambda^{-2}-[\lambda^{-1}]^2\\
-&=\frac{2}{\lambda^{2}}.
+&=\frac{1}{\lambda^{2}}.
 \end{aligned}
 $$
 :::
