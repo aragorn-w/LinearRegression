@@ -1574,7 +1574,7 @@ plot(penguins$bill_length_mm ~ fitted(lmods),
 An overview of terms used to define a linear model.
 
 | Term                 | Description                                                                 | Observable? | Random? |
-|:-----------|:-------------------------------------|:-----------|:-----------|
+|:---------------------|:----------------------------------------------------------------------------|:------------|:--------|
 | $Y$                  | response variable                                                           | Yes         | Yes     |
 | $Y_i$                | response value for the $i\text{th}$ observation                             | Yes         | Yes     |
 | $\mathbf{y}$         | the $n\times 1$ column vector of response values                            | Yes         | Yes     |
@@ -1593,7 +1593,7 @@ An overview of terms used to define a linear model.
 An overview of important functions discussed in this chapter.
 
 | Function    | Purpose                                                                        |
-|:--------------|:--------------------------------------------------------|
+|:------------|:-------------------------------------------------------------------------------|
 | `lm`        | Fits a linear model based on a provided `formula`                              |
 | `summary`   | Provides summary information about the fitted model                            |
 | `coef`      | Extracts the vector of estimated regression coefficients from the fitted model |
