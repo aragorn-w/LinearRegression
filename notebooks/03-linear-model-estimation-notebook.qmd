@@ -1170,6 +1170,8 @@ Let's try adding our fitted values to the `penguins` data frame.
 
 ```{r}
 #| error: true
+#| eval: false
+#| echo: true
 penguins <-
   penguins |>
   transform(pl_fitted = predict(lmodp))
