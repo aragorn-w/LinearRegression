@@ -13,9 +13,7 @@ title-block-banner: true
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/02-data-exploration-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
-</a>
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/02-data-exploration-notebook.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg"/> </a>
 
 # Introduction
 
@@ -165,7 +163,7 @@ dplyr::glimpse(penguins_clean)
 Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data.
 
 | numeric summary                 | variable type | summarizes        | R function            |
-|------------------------|----------------|----------------|-----------------|
+|---------------------------------|---------------|-------------------|-----------------------|
 | mean                            | `numeric`     | center            | `mean`                |
 | median                          | `numeric`     | center            | `median`              |
 | variance                        | `numeric`     | spread            | `var`                 |
@@ -290,7 +288,7 @@ max(penguins_clean$body_mass, na.rm = TRUE)
 
 The correlation between two `numeric` variables quantifies the strength and direction of their linear relationship.
 
-The most common correlation statistic is Pearson's correlation statistic. If $x_1, x_2, x_n$ and $y_1, y_2, \ldots, y_n$ are two sets of `numeric` values, then the sample correlation statistic is computed as 
+The most common correlation statistic is Pearson's correlation statistic. If $x_1, x_2, x_n$ and $y_1, y_2, \ldots, y_n$ are two sets of `numeric` values, then the sample correlation statistic is computed as
 
 $$r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right),$$
 
@@ -377,7 +375,7 @@ The two most popular packages for producing graphics in R are:
 -   **ggplot2**: a "grammar of graphics" that is able to produce complex graphics with automated legends in a consistent, systematic way.
 
 | Visual summary       | Variable types          | Summary type | Base functions               | geoms                        |
-|:--------------|:--------------|:--------------|:--------------|:--------------|
+|:---------------------|:------------------------|:-------------|:-----------------------------|:-----------------------------|
 | box plot             | `numeric`               | univariate   | `boxplot`                    | `geom_boxplot`               |
 | histogram            | `numeric`               | univariate   | `hist`                       | `geom_histogram`             |
 | density plot         | `numeric`               | univariate   | `plot`, `density`            | `geom_density`               |
