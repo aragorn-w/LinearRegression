@@ -13,11 +13,9 @@ title-block-banner: true
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/01-r-foundations-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
-</a>
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/01-r-foundations-notebook.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg"/> </a>
 
----
+------------------------------------------------------------------------
 
 # What is R?
 
@@ -185,8 +183,7 @@ Let's get help on the `lm` function.
 
 # Data Types and Structures
 
-**Basic Data Types**
----
+## **Basic Data Types**
 
 R has 6 basic vector types:
 
@@ -197,8 +194,7 @@ R has 6 basic vector types:
 5.  complex: complex numbers. E.g., `1+3i`.
 6.  raw: a type to hold raw bytes.
 
-**Other important object types**
---
+## **Other important object types**
 
 -   **Numeric**: An object is `numeric` if it is of type `integer` or `double`. In that case, it's `mode` is said to be `numeric`.
 -   **NULL**: `NULL` is a special object to indicate an object is absent.
@@ -220,8 +216,7 @@ R has 5 basic data structures:
 
 # Vectors
 
-**Creating vectors**
----
+## **Creating vectors**
 
 A *vector* is a one-dimensional set of data of the same type.
 
@@ -310,8 +305,7 @@ new <- c(v1, v2, v3) # combine vectors
 new # print the combined vector
 ```
 
-**Categorical vectors**
----
+## **Categorical vectors**
 
 Categorical data should be stored as a `factor` in R.
 
@@ -358,8 +352,7 @@ Attempt to complete the following tasks:
 # type your code here
 ```
 
-**Extracting parts of a vector**
----
+## **Extracting parts of a vector**
 
 Parts of a vector can be extracted by appending an index vector in square brackets `[]`.
 
@@ -380,8 +373,7 @@ a[-c(2, 4, 6)] # select all but element 2, 4, 6
 a[-(3:6)] # select all but elements 3-6
 ```
 
-**Logical Expressions**
----
+## **Logical Expressions**
 
 A logical expression uses one or more logical operators to determine which elements of an object satisfy the specified statement.
 
@@ -486,8 +478,7 @@ a[(a < 6)|(a == 10)]
 
 # Helpful Functions
 
-**Common Useful Functions**
----
+## **Common Useful Functions**
 
 ```{r}
 #| eval: false
@@ -504,8 +495,7 @@ summary(x) # summary of x
 str(x) # structure of x
 ```
 
-**Functions for Statistical Distributions**
----
+## **Functions for Statistical Distributions**
 
 Suppose that a random variable $X$ has the `dist` distribution. The function templates in the list below describe how to obtain certain properties of $X$.
 
@@ -582,8 +572,7 @@ df2 <- data.frame(ID = d, Color = e, Passed = f)
 df2
 ```
 
-**Importing Data**
----
+## **Importing Data**
 
 In practice, you are likely to have a file that contains the data you want to analyze and you want to import the data into R.
 
@@ -609,8 +598,7 @@ dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleV
 str(dtf)
 ```
 
-**Extracting parts of a data frame**
----
+## **Extracting parts of a data frame**
 
 R provides many ways to extract parts of a data frame.
 
@@ -648,8 +636,7 @@ You can also use numeric indices to directly indicate the rows or columns of the
 mtcars[c(1, 2)]
 ```
 
-**Conditional Extraction of Data Frames**
----
+## **Conditional Extraction of Data Frames**
 
 Logical expressions can be used to subset a data frame.
 
@@ -675,8 +662,7 @@ mtcars[mtcars$cyl == 8 & mtcars$mpg > 17,
        c("mpg", "cyl", "disp", "hp")]
 ```
 
-***Modifying Data Frames***
----
+## ***Modifying Data Frames***
 
 Columns can be added to a data frame using the `$` and assignment operator.
 
@@ -684,8 +670,7 @@ Columns can be added to a data frame using the `$` and assignment operator.
 mtcars$kpg <- mtcars$mpg*1.6
 ```
 
-***Extraction using the `subset` function***
----
+## ***Extraction using the `subset` function***
 
 The `subset` function returns the part of a data frame that meets the specified conditions.
 
@@ -720,7 +705,6 @@ subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))
 R's native pipe operator (`|>`) allows you to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. The pipe operator is a convenient way to string together numerous steps in a string of commands.
 
 When reading code with pipes, the pipe can be thought of as the word "then".
-
 
 In the code below, we take `mtcars` *then* subset it based on `disp` and *then* select some columns.
 
