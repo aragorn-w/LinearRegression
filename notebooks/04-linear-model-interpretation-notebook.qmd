@@ -616,7 +616,7 @@ To summarize the interpretation of the coefficients in separate lines models, as
 -   $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
 -   $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X=0$.
 -   $\beta_X$ represents the expected change in the response when $X$ increases by 1 unit for observations having the reference level.
--   $\beta_X L_j$, for $j=2,\ldots,K$, represents the difference in the expected response between observations having the reference level in comparison to level $L_j$ when $X$ increases by 1 unit. More simply, these terms represent the difference in the rate of change for observations having level $L_j$ compared to the reference level.
+-   $\beta_{X L_j}$, for $j=2,\ldots,K$, represents the difference in the expected response between observations having the reference level in comparison to level $L_j$ when $X$ increases by 1 unit. More simply, these terms represent the difference in the rate of change for observations having level $L_j$ compared to the reference level.
 
 We illustrate these interpretation using the separate lines model to the `penguins` data. The fitted separate lines model was,
 
@@ -670,7 +670,7 @@ $$
 &= 26.99 + 0.003 \mathtt{body\_mass\_g},\\
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
 &= 31.17 + 0.004 \mathtt{body\_mass\_g},\\
-&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Gentoo}) \\
 &= 26.74 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
