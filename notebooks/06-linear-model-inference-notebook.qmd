@@ -14,11 +14,9 @@ wrap: 'none'
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/06-linear-model-inference-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
-</a>
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/06-linear-model-inference-notebook.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg"/> </a>
 
----
+------------------------------------------------------------------------
 
 ```{r}
 if(!require(palmerpenguins, quietly = TRUE)) {
@@ -31,7 +29,7 @@ if(!require(api2lm, quietly = TRUE)) {
 }
 ```
 
-We adjust some printing options for clarity. 
+We adjust some printing options for clarity.
 
 ```{r}
 options(digits = 7, scipen = 2)
@@ -39,37 +37,35 @@ options(digits = 7, scipen = 2)
 
 # Overview of inference and prediction
 
----
+------------------------------------------------------------------------
 
 Inference and prediction are often intertwined, so we discuss them together.
 
 *Inference* focuses on drawing conclusions about the data-generating distribution
 
-- The two primary types of statistical inference are confidence intervals and hypothesis tests.
-- The Estimation & Inference Appendix provides an overview of both confidence intervals and hypothesis tests in a more general context.
+-   The two primary types of statistical inference are confidence intervals and hypothesis tests.
+-   The Estimation & Inference Appendix provides an overview of both confidence intervals and hypothesis tests in a more general context.
 
-*Prediction* focuses on selecting a plausible value or range of values for an unobserved response. 
+*Prediction* focuses on selecting a plausible value or range of values for an unobserved response.
 
-- Prediction often makes use of estimated parameters we find as part of the inferential process, though this isn't required.
+-   Prediction often makes use of estimated parameters we find as part of the inferential process, though this isn't required.
 
-We will also introduce and discuss solutions for the multiple
-comparisons problem, which arises when we make multiple inferences or predictions simultaneously.
+We will also introduce and discuss solutions for the multiple comparisons problem, which arises when we make multiple inferences or predictions simultaneously.
 
 # Necessary notation
 
----
+------------------------------------------------------------------------
 
-The $t$ distribution is a symmetric bell-shaped distribution
-like the normal distribution but has a larger standard deviation.
+The $t$ distribution is a symmetric bell-shaped distribution like the normal distribution but has a larger standard deviation.
 
-- The $t$ distribution has a degrees of freedom parameter, $\nu$.
-- $t_{\nu}$ denotes a random variable having a $t$ distribution with $\nu$ degrees of freedom.
-    - As the degrees of freedom of a $t$ random variable increases it behaves more and more similarly to a random variable with a standard normal distribution (a $\mathsf{N}(0,1)$ distribution).
-- $t_{\nu}^{\alpha}$ denotes the $1-\alpha$ quantile of a $t$ distribution with $\nu$ degrees of freedom.
+-   The $t$ distribution has a degrees of freedom parameter, $\nu$.
+-   $t_{\nu}$ denotes a random variable having a $t$ distribution with $\nu$ degrees of freedom.
+    -   As the degrees of freedom of a $t$ random variable increases it behaves more and more similarly to a random variable with a standard normal distribution (a $\mathsf{N}(0,1)$ distribution).
+-   $t_{\nu}^{\alpha}$ denotes the $1-\alpha$ quantile of a $t$ distribution with $\nu$ degrees of freedom.
 
 The figure below displays the density of a $t$ distribution with 10 degrees of freedom while also indicating the 0.95 quantile of that distribution.
 
-  - Additional information about the $t$ distribution is available on [Wikipedia](https://en.wikipedia.org/wiki/Student%27s_t-distribution).
+-   Additional information about the $t$ distribution is available on [Wikipedia](https://en.wikipedia.org/wiki/Student%27s_t-distribution).
 
 ```{r}
 #| echo: false
@@ -84,37 +80,33 @@ text(3, 0.3, "0.95 quantile", pos = 4)
 
 The $F$ distribution is characterized as the ratio of two independent chi-square random variables divided by their degrees of freedom.
 
-- It has a numerator degrees of freedom parameter, $\nu_1$, and a denominator degrees of freedom parameter, $\nu_2$.
-- The notation $F_{\nu_1, \nu_2}$ denotes a random variable
-having an $F$ distribution with $\nu_1$ numerator degrees of freedom and $\nu_2$ denominator degrees of freedom.
-- $F^{\alpha}_{\nu_1,\nu_2}$ denotes the $1-\alpha$ quantile of an $F$ random variables with $\nu_1$ numerator degrees of freedom and $\nu_2$
-denominator degrees of freedom.
-- In fact, $[t_{\nu}]^2=F_{1,\nu}$, i.e.,
-the square of a $t$ random variable with $\nu$ degrees of freedom is equivalent to an $F$ random variable with $1$ numerator degree of freedom and $\nu$ denominator degrees of freedom.
+-   It has a numerator degrees of freedom parameter, $\nu_1$, and a denominator degrees of freedom parameter, $\nu_2$.
+-   The notation $F_{\nu_1, \nu_2}$ denotes a random variable having an $F$ distribution with $\nu_1$ numerator degrees of freedom and $\nu_2$ denominator degrees of freedom.
+-   $F^{\alpha}_{\nu_1,\nu_2}$ denotes the $1-\alpha$ quantile of an $F$ random variables with $\nu_1$ numerator degrees of freedom and $\nu_2$ denominator degrees of freedom.
+-   In fact, $[t_{\nu}]^2=F_{1,\nu}$, i.e., the square of a $t$ random variable with $\nu$ degrees of freedom is equivalent to an $F$ random variable with $1$ numerator degree of freedom and $\nu$ denominator degrees of freedom.
 
 # Assumptions and properties of the OLS estimator
 
----
+------------------------------------------------------------------------
 
 We assume:
 
-- $\mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}$.
- 
-- $\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n})$.
+-   $\mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}$.
+
+-   $\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n})$.
 
 This assumption applies to all errors, so we believe that all errors, observed and future, will have mean 0, variance $\sigma^2$, will be uncorrelated with other observations, and have a normal distribution.
 
-Under these assumptions, we have already shown that 
+Under these assumptions, we have already shown that
 
-- $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
-- $\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
+-   $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
+-   $\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
 
 # Parametric confidence intervals for regression coefficients
 
+**Standard** $t$-based confidence intervals
 
-**Standard $t$-based confidence intervals**
-
----
+------------------------------------------------------------------------
 
 Under the assumptions above, we can prove (though we won't) that
 
@@ -130,15 +122,12 @@ $$
 
 Recall that:
 
-- Estimated standard error is the estimated standard deviation of the
-sampling distribution of $\hat{\beta}_j$. 
-- The notation $(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}$ indicates the element in row $j+1$, column $j+1$, of the matrix $(\mathbf{X}^T\mathbf{X})^{-1}$.
+-   Estimated standard error is the estimated standard deviation of the sampling distribution of $\hat{\beta}_j$.
+-   The notation $(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}$ indicates the element in row $j+1$, column $j+1$, of the matrix $(\mathbf{X}^T\mathbf{X})^{-1}$.
 
+$(\hat{\beta}_j-\beta_j)/\hat{\mathrm{se}}(\hat{\beta}_j)$ is a pivotal quantity with a $t$ distribution, and it can be used to derive a confidence interval.
 
-$(\hat{\beta}_j-\beta_j)/\hat{\mathrm{se}}(\hat{\beta}_j)$ is a
-pivotal quantity with a $t$ distribution, and it can be used to derive a confidence interval.
-
-A confidence interval for $\beta_j$ with confidence level $1-\alpha$ is given by the expression: 
+A confidence interval for $\beta_j$ with confidence level $1-\alpha$ is given by the expression:
 
 $$
 \hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
@@ -146,25 +135,23 @@ $$
 
 It is critical to note that the $1-\alpha$ confidence level refers to the procedure for a single interval, not the family of intervals we can produce for all $p$ coefficients.
 
-The `confint` function returns confidence intervals for the regression
-coefficients of a fitted model. 
+The `confint` function returns confidence intervals for the regression coefficients of a fitted model.
 
 The `confint` function has 3 main arguments:
 
 -   `object`: a fitted model (`lm`) object.
 -   `parm`: a vector of numbers or names indicating the parameters for which we want to construct confidence intervals.
-    - By default, confidence intervals are constructed for all parameters. 
+    -   By default, confidence intervals are constructed for all parameters.
 -   `level`: the confidence level desired for the confidence interval.
-    - The default value is `0.95`, which will produce 95% confidence intervals.
+    -   The default value is `0.95`, which will produce 95% confidence intervals.
 
-We once again use the `penguins` data from the **palmerpenguins**
-package to illustrate what we have learned.
+We once again use the `penguins` data from the **palmerpenguins** package to illustrate what we have learned.
 
 **Penguins example**
 
----
+------------------------------------------------------------------------
 
-Consider the regression model: 
+Consider the regression model:
 
 $$
 \begin{aligned}
@@ -173,7 +160,7 @@ $$
 \end{aligned}
 $$
 
-We estimate the parameters of this model in R. 
+We estimate the parameters of this model in R.
 
 ```{r}
 # load data
@@ -189,16 +176,11 @@ We obtain the 95% confidence intervals for the 3 regression coefficients.
 confint(mlmod)
 ```
 
-The 95% confidence interval for the intercept parameter is [-12.45,
-5.58]. We are 95% confident that the mean penguin bill length is between -12.25 and 5.58 mm for a penguin with a body mass of 0 g and a flipper length of 0 mm. (This really isn't sensible).
+The 95% confidence interval for the intercept parameter is \[-12.45, 5.58\]. We are 95% confident that the mean penguin bill length is between -12.25 and 5.58 mm for a penguin with a body mass of 0 g and a flipper length of 0 mm. (This really isn't sensible).
 
-The 95% confidence interval for the `body_mass_g` coefficient is
-[-0.00046, 0.002]. We are 95% confident the regression coefficient for
-`body_mass_g` is between -0.00046 and 0.002, assuming the
-`flipper_length_mm` regressor is also in the model.
+The 95% confidence interval for the `body_mass_g` coefficient is \[-0.00046, 0.002\]. We are 95% confident the regression coefficient for `body_mass_g` is between -0.00046 and 0.002, assuming the `flipper_length_mm` regressor is also in the model.
 
-If we wanted to get the 90% confidence interval for the
-`flipper_length_mm` coefficient by itself, we could use either of the commands shown below.
+If we wanted to get the 90% confidence interval for the `flipper_length_mm` coefficient by itself, we could use either of the commands shown below.
 
 ```{r}
 confint(mlmod, parm = 3, level = 0.90)
@@ -211,11 +193,11 @@ confint(mlmod, parm = "flipper_length_mm",
 
 # The multiple comparisons problem
 
----
+------------------------------------------------------------------------
 
 Our linear models typically have multiple regression coefficients.
 
-- We typically want to construct confidence intervals for all of the coefficients.
+-   We typically want to construct confidence intervals for all of the coefficients.
 
 The confidence level of the procedure described above is only valid for a single interval.
 
@@ -225,21 +207,21 @@ This is an example of the multiple comparisons problem.
 
 A **multiple comparisons problem** occurs anytime we make multiple inferences (confidence intervals, hypothesis tests, prediction intervals, etc.).
 
-- If we construct two confidence intervals with level 0.95, then the probability that both intervals simultaneously contain their respective target parameters will be less than 0.95.
-- We can guarantee that our family-wise confidence level will be at least 0.90, but we can't determine the exact value without more information
-- We are more likely to draw erroneous conclusions if we do not adjust for the fact that we are making multiple inferential statements.
+-   If we construct two confidence intervals with level 0.95, then the probability that both intervals simultaneously contain their respective target parameters will be less than 0.95.
+-   We can guarantee that our family-wise confidence level will be at least 0.90, but we can't determine the exact value without more information
+-   We are more likely to draw erroneous conclusions if we do not adjust for the fact that we are making multiple inferential statements.
 
 The **family-wise confidence level** is the probability that a confidence interval procedure produces a family of intervals that simultaneously contain their target parameter.
 
-- The family-wise confidence level is also known as the **simultaneous** or **overall** confidence level.
+-   The family-wise confidence level is also known as the **simultaneous** or **overall** confidence level.
 
 A **multiple comparisons procedure** is a procedure designed to adjust for multiple inferences.
 
-- E.g., a multiple comparisons procedure will produce a family of intervals that have a family-wise confidence level above some threshold.
+-   E.g., a multiple comparisons procedure will produce a family of intervals that have a family-wise confidence level above some threshold.
 
-**Adjusted confidence intervals for regression coefficients** 
+**Adjusted confidence intervals for regression coefficients**
 
----
+------------------------------------------------------------------------
 
 Bonferroni (1936) proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the **Bonferroni correction**.
 
@@ -259,10 +241,9 @@ for two events $A$ and $B$.
 
 Suppose that we construct a family of $k$ confidence intervals with individual confidence level $1-\alpha/k$ (and all assumptions are satisfied.)
 
-- The probability that the confidence interval procedure for a specific interval doesn't contain the target parameter is
-$\alpha/k$.
+-   The probability that the confidence interval procedure for a specific interval doesn't contain the target parameter is $\alpha/k$.
 
-Then: 
+Then:
 
 $$
 \begin{aligned}
@@ -279,12 +260,12 @@ Thus, the family-wise confidence level of all $k$ intervals is AT LEAST $1-\alph
 
 The Bonferroni correction is known to be conservative, which means that the family-wise confidence level is typically much larger than $1-\alpha$.
 
-- Conservative methods can have low power.
-- i.e., Our intervals are much wider than they need to be, so we aren't able to draw precise conclusions about the plausible values of our regression coefficients.
+-   Conservative methods can have low power.
+-   i.e., Our intervals are much wider than they need to be, so we aren't able to draw precise conclusions about the plausible values of our regression coefficients.
 
 **Penguins example (continued)**
 
----
+------------------------------------------------------------------------
 
 Let's construct simultaneous confidence intervals for our `penguins` example using the Bonferroni correction.
 
@@ -301,8 +282,8 @@ Alternatively, we can use the `confint_adjust` function from the **api2lm** pack
 
 The `confint_adjust` function works almost identically to the `confint` function.
 
-- The `confint_adjust` function takes a `method` argument to indicate the type of adjustment to make when constructing the confidence intervals.
-- e.g., `method = "bonferroni"` will produce Bonferroni-corrected intervals. 
+-   The `confint_adjust` function takes a `method` argument to indicate the type of adjustment to make when constructing the confidence intervals.
+-   e.g., `method = "bonferroni"` will produce Bonferroni-corrected intervals.
 
 ```{r}
 confint_adjust(mlmod, method = "bonferroni")
@@ -318,8 +299,7 @@ $$
 \hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
 $$
 
-The `confint_adjust` function from the **api2lm** package will produce these intervals when setting the `method` argument to `"wh"`. 
-We construct Working-Hotelling-adjusted intervals with family-wise confidence level of at least 0.95 for the `penguins` example using the code below.
+The `confint_adjust` function from the **api2lm** package will produce these intervals when setting the `method` argument to `"wh"`. We construct Working-Hotelling-adjusted intervals with family-wise confidence level of at least 0.95 for the `penguins` example using the code below.
 
 ```{r}
 confint_adjust(mlmod, method = "wh")
@@ -335,8 +315,8 @@ As the number of intervals increases, the Working-Hotelling intervals will event
 
 It is common to make two types of predictions in a regression context:
 
-- Prediction of a mean response.
-- Prediction of a new response.
+-   Prediction of a mean response.
+-   Prediction of a new response.
 
 In either context, we want to make predictions with respect to a specific combination of regressor values, which we denote $\mathbf{x}_0=[1,x_{0,1},\ldots,x_{0,p-1}]$.
 
@@ -346,30 +326,35 @@ We use the notation $Y(\mathbf{x}_0)$ to describe a new response for a specific 
 
 $E(Y\mid \mathbb{X}=\mathbf{x}_0)$ represents the average response when the regressor values are $\mathbf{x}_0$.
 
-- i.e., the number we would get if were able to determine the average of an infinite number of responses with regressor values being fixed at $\mathbf{x}_0$.
+-   i.e., the number we would get if were able to determine the average of an infinite number of responses with regressor values being fixed at $\mathbf{x}_0$.
 
 $Y(\mathbf{x}_0)$ represents the actual response we will will observe for a new observation with regressor values $\mathbf{x}_0$.
 
-- $Y(\mathbf{x}_0)$ represents the mean response for that combination of regressor values plus some error.
-- $Y(\mathbf{x}_0)=E(Y\mid \mathbb{X}=\mathbf{x}_0)+\epsilon(\mathbf{x}_0)$, where $\epsilon(\mathbf{x_0})$ denotes the error for our new observation.
+-   $Y(\mathbf{x}_0)$ represents the mean response for that combination of regressor values plus some error.
+-   $Y(\mathbf{x}_0)=E(Y\mid \mathbb{X}=\mathbf{x}_0)+\epsilon(\mathbf{x}_0)$, where $\epsilon(\mathbf{x_0})$ denotes the error for our new observation.
 
 **Example**
 
 Suppose we want to rent a new apartment or buy a new house. If we look through the available listings, we will likely filter our search results by certain characteristics. We might limit our search to dwellings with 3 bedrooms, 2 bathrooms, that are within a certain distance of public transportation, and have a certain amount of square footage.
 
-- If we averaged the monthly rent or asking price of all the dwellings matching our specifications, then that would be an approximation of the mean response (we would need all the possible dwellings matching those considerations to get the true average).
--     This average would give us an idea of the "typical" price of dwellings with those characteristics.
-- On the other hand, we likely want to know the price of the dwelling we actually end up in. This is the "new response" we want to predict.
+-   If we averaged the monthly rent or asking price of all the dwellings matching our specifications, then that would be an approximation of the mean response (we would need all the possible dwellings matching those considerations to get the true average).
+
+-   
+
+    ```         
+    This average would give us an idea of the "typical" price of dwellings with those characteristics.
+    ```
+
+-   On the other hand, we likely want to know the price of the dwelling we actually end up in. This is the "new response" we want to predict.
 
 It is common to distinguish the two scenarios by using the terminology:
 
-- "Estimating the mean response" to refer to prediction of the the mean
-- "Prediction a new response" when we want to predict a new observation.
+-   "Estimating the mean response" to refer to prediction of the the mean
+-   "Prediction a new response" when we want to predict a new observation.
 
 # Confidence interval for the mean response
 
-Consider a typical linear regression model with $p$ regression
-coefficients given by:
+Consider a typical linear regression model with $p$ regression coefficients given by:
 
 $$
 E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.
@@ -384,8 +369,7 @@ E(Y\mid \mathbb{X}=\mathbf{x}_0) &= \beta_0 + \sum_{j=1}^{p-1}x_{0,j}\beta_j \\
 \end{aligned}
 $$
 
-To simplify our notation, we drop the "$\mathbb{X}=$" in our discussion below, so
-$E(Y\mid \mathbb{X}=\mathbf{x}_0)\equiv E(Y\mid \mathbf{x}_0)$.
+To simplify our notation, we drop the "$\mathbb{X}=$" in our discussion below, so $E(Y\mid \mathbb{X}=\mathbf{x}_0)\equiv E(Y\mid \mathbf{x}_0)$.
 
 $E(Y\mid \mathbf{x}_0)$ represents the average response we will observe if we somehow managed to observe infinitely many responses with $\mathbb{X}=\mathbf{x}_0$.
 
@@ -402,10 +386,10 @@ which replaces the unknown, true coefficients by their OLS estimates.
 
 We want to create a confidence interval for $E(Y\mid \mathbf{x}_0)$.
 
-We can use the pivotal quantity 
+We can use the pivotal quantity
 
 $$
-\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
+\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0^T \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
 $$
 
 The denominator is
@@ -414,41 +398,31 @@ $$
 \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\hat{\sigma}\sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 $$
 
-A confidence interval for $E(Y\mid \mathbf{x}_0)$ with confidence
-level $1-\alpha$ is given by the expression:
+A confidence interval for $E(Y\mid \mathbf{x}_0)$ with confidence level $1-\alpha$ is given by the expression:
 
 $$
-\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}}).
+\mathbf{x}_0^T\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}).
 $$
 
 The `predict` method for an `lm` object can be used to:
 
-- Estimate the mean response for multiple combinations of predictor variables.
-- Compute the estimated standard error of each estimate.
-- Obtain confidence intervals for the mean response.
+-   Estimate the mean response for multiple combinations of predictor variables.
+-   Compute the estimated standard error of each estimate.
+-   Obtain confidence intervals for the mean response.
 
 The primary arguments to the `lm` method for `predict` are:
 
 -   `object`: A fitted model from the `lm` function.
 -   `newdata`: A data frame of predictor values. All predictors used in the formula used to fit `object` must be provided. Each row contains the predictor values for the mean response we want to estimate. If this is not provided, then the fitted values for each observation are returned.
--   `se.fit`: A logical value indicating whether we want to explicitly
-    compute the standard errors of each estimated mean, i.e.,
-    $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0))$ for each estimate.
--   `interval`: The type of interval to compute. The default is `none`,
-    meaning no interval is provided. Setting `interval = "confidence"`
-    will return a confidence interval for the mean response associated
-    with each row of `newdata`. Setting `interval = "prediction"` will
-    return a prediction interval for a new response, which we will
-    discuss in the next section.
+-   `se.fit`: A logical value indicating whether we want to explicitly compute the standard errors of each estimated mean, i.e., $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0))$ for each estimate.
+-   `interval`: The type of interval to compute. The default is `none`, meaning no interval is provided. Setting `interval = "confidence"` will return a confidence interval for the mean response associated with each row of `newdata`. Setting `interval = "prediction"` will return a prediction interval for a new response, which we will discuss in the next section.
 -   `level`: The confidence level of the interval.
 
-Run `?predict.lm` in the Console for additional details about this
-function.
+Run `?predict.lm` in the Console for additional details about this function.
 
 We will estimate the mean response for the parallel lines model previously fit to the `penguins` data.
 
-- This is to emphasize that the `predict` function asks you to specify the values of the
-*predictor* variables for each estimate you want to make, not the complete set of regressors.
+-   This is to emphasize that the `predict` function asks you to specify the values of the *predictor* variables for each estimate you want to make, not the complete set of regressors.
 
 Recall we fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was:
 
@@ -470,7 +444,7 @@ coef(lmodp)
 
 Let's estimate the mean response for the "typical" `body_mass_g` of each `species`.
 
-- We use the `group_by` and `summarize` functions from the **dplyr** package to simplify this process.
+-   We use the `group_by` and `summarize` functions from the **dplyr** package to simplify this process.
 
 ```{r}
 # mean body_mass_g of each species
@@ -482,9 +456,8 @@ newpenguins
 
 In the code below, we:
 
-- Estimate the mean `flipper_length_mm` based on the fitted model in `lmodp` for the mean `body_mass_g` of each level of `species`.
-- Compute the estimated standard errors of
-each estimate by setting the `se.fit` argument to `TRUE`.
+-   Estimate the mean `flipper_length_mm` based on the fitted model in `lmodp` for the mean `body_mass_g` of each level of `species`.
+-   Compute the estimated standard errors of each estimate by setting the `se.fit` argument to `TRUE`.
 
 ```{r}
 predict(lmodp, newdata = newpenguins, se.fit = TRUE)
@@ -503,8 +476,7 @@ predict(lmodp, newdata = newpenguins,
         level = 0.98, interval = "confidence")
 ```
 
-The 98% confidence interval for the mean flipper length of an Adelie penguin with a body mass of 3700.662 g is [38.33, 39.25]. We are 98% confident that the mean flipper length of Adelie penguins with a body mass of 3700.662 is between 38.33 g and 39.25 g. Note: we are constructing a confidence interval for the mean flipper length of ALL
-Adelie penguins with this body mass, i.e., for:
+The 98% confidence interval for the mean flipper length of an Adelie penguin with a body mass of 3700.662 g is \[38.33, 39.25\]. We are 98% confident that the mean flipper length of Adelie penguins with a body mass of 3700.662 is between 38.33 g and 39.25 g. Note: we are constructing a confidence interval for the mean flipper length of ALL Adelie penguins with this body mass, i.e., for:
 
 $$
 E(\mathtt{flipper\_length\_mm}\mid \mathtt{body\_mass\_g} = 3700.662, \mathtt{species} = \mathtt{Adelie}),
@@ -512,17 +484,17 @@ $$
 
 which is an unknown characteristic of the population of all Adelie penguins.
 
-Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52].
+Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is \[48.15, 49.52\].
 
-Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02].
+Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is \[46.99, 48.02\].
 
-We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed. 
+We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed.
 
 Both corrections are implemented in the `predict_adjust` function in the **api2lm** package, which is intended to work identically to the `predict` function, but produces intervals that adjust for multiple comparisons.
 
-- The only additional argument is `method`, with choices `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"wh"` (Working-Hotelling adjustment).
+-   The only additional argument is `method`, with choices `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"wh"` (Working-Hotelling adjustment).
 
-We produce both types of adjusted intervals in the code below. 
+We produce both types of adjusted intervals in the code below.
 
 The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
 
@@ -539,7 +511,6 @@ predict_adjust(lmodp, newdata = newpenguins,
                interval = "confidence",
                method = "wh")
 ```
-
 
 # Prediction interval for a new response
 
@@ -559,8 +530,8 @@ $$
 
 Thus, our predicted new response, $\hat{Y}(\mathbf{x})$ is the sum of two components:
 
-- The estimated mean plus.
-- The estimated error.
+-   The estimated mean plus.
+-   The estimated error.
 
 $$
 \hat{Y}(\mathbf{x}_0)=\hat{E}(Y\mid \mathbf{x}_0) + \hat{\epsilon}(\mathbf{x}_0).
@@ -578,13 +549,12 @@ $$
 
 This is the best prediction because:
 
-- $\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ is the best linear unbiased estimator of $E(Y\mid \mathbf{x}_0)$ according to the Gauss-Markov theorem.
-- Our best guess for the error, $\epsilon(\mathbf{x}_0$ is zero because the errors have mean 0 and are uncorrelated.
+-   $\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ is the best linear unbiased estimator of $E(Y\mid \mathbf{x}_0)$ according to the Gauss-Markov theorem.
+-   Our best guess for the error, $\epsilon(\mathbf{x}_0)$ is zero because the errors have mean 0 and are uncorrelated.
 
-We want to create a prediction interval for $Y(\mathbf{x}_0)$. 
+We want to create a prediction interval for $Y(\mathbf{x}_0)$.
 
-- A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable instead of a parameter.
-
+-   A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable instead of a parameter.
 
 We can use the $t$-distributed pivotal quantity:
 
@@ -600,12 +570,12 @@ $$
 
 The standard deviation of the prediction error is sometimes known as the **standard error of prediction**, but we do not use that terminology.
 
-Comparing $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))$  and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$, we can conclude that *prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level.
+Comparing $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))$ and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$, we can conclude that *prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level.
 
 Conceptually, prediction intervals are wider because there are two sources of uncertainty in our prediction:
 
-- Estimating the mean response.
-- Predicting the error of the new response. 
+-   Estimating the mean response.
+-   Predicting the error of the new response.
 
 A prediction interval for $Y(\mathbf{x}_0)$ with confidence level $1-\alpha$ is given by the expression:
 
@@ -615,10 +585,10 @@ $$
 
 The `predict` function can be used to create predictions and prediction intervals for a new response in the same way that it can be used to estimate the mean response and produce associated confidence intervals.
 
-- If the `interval` argument is `"none"`, then predictions for a new response are returned.
-- If the `interval` argument is `"prediction"`, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the `newdata` argument.
+-   If the `interval` argument is `"none"`, then predictions for a new response are returned.
+-   If the `interval` argument is `"prediction"`, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the `newdata` argument.
 
-Continuing the example from before, we want to predict the response value for new, unobserved penguins having the observed mean `body_mass_g` for each level of `species`. 
+Continuing the example from before, we want to predict the response value for new, unobserved penguins having the observed mean `body_mass_g` for each level of `species`.
 
 In the code below, we predict the `flipper_length_mm` for new penguins for the predictor values stored in `newpenguins` based on the fitted model in `lmodp`. We also construct the associated 99% prediction intervals.
 
@@ -629,22 +599,20 @@ predict(lmodp, newdata = newpenguins,
 
 A new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm.
 
-Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11].
+Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is \[48.56, 55.11\].
 
-The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 with a confidence level of 0.99.
+The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and 53.75 with a confidence level of 0.99.
 
 Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem.
 
 To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$.
 
-The Working-Hotelling correction does not apply to new responses. A similar adjustment proposed by Scheff&#233; does apply (Kutner et al., 2005).
+The Working-Hotelling correction does not apply to new responses. A similar adjustment proposed by Scheffé does apply (Kutner et al., 2005).
 
-- The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by
-$\sqrt{k F^{1-\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals.
-- The Working-Hotelling multiplier was $\sqrt{p F^{1-\alpha}_{p,n-p}}$. Thus, the Scheff&#233; multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.
+-   The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by $\sqrt{k F^{\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals.
+-   The Working-Hotelling multiplier was $\sqrt{p F^{\alpha}_{p,n-p}}$. Thus, the Scheffé multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.
 
-Both the Bonferroni and Scheff&#233; multiple comparisons corrections are implemented in the `predict_adjust` function in the **api2lm** package. 
-In the prediction interval setting, we can choose the correction `method` argument to be `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"scheffe"` (Scheffe adjustment). 
+Both the Bonferroni and Scheffé multiple comparisons corrections are implemented in the `predict_adjust` function in the **api2lm** package. In the prediction interval setting, we can choose the correction `method` argument to be `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"scheffe"` (Scheffe adjustment).
 
 The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
 
@@ -655,7 +623,7 @@ predict_adjust(lmodp, newdata = newpenguins,
                method = "bonferroni")
 ```
 
-```
+```         
 predict_adjust(lmodp, newdata = newpenguins,
                level = 0.99,
                interval = "prediction",
@@ -666,13 +634,13 @@ predict_adjust(lmodp, newdata = newpenguins,
 
 If we assume we are fitting the multiple linear regression model in Equation \@ref(eq:model-def-inference), then our model has $p$ regression coefficient $\beta_0, \beta_1, \ldots, \beta_{p-1}$. How would we perform a hypothesis test for exactly one of these regression coefficients?
 
-Recall that if we make the assumptions in Equation
-\@ref(eq:error-assumption-inference), then
+Recall that if we make the assumptions in Equation \@ref(eq:error-assumption-inference), then
 
+```{=tex}
 \begin{equation}
 \frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. (\#eq:pivot-t-betaj)
 \end{equation}
-
+```
 Let's say we wish to test whether, for this model, $\beta_j$ differs from some constant number $c$ (typically, $c=0$). Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. We can state the hypotheses we wish to test as
 
 $$
@@ -690,8 +658,7 @@ $$
 T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}
 $$
 
-Thus, the null distribution of $T_j$ is a $t$ distribution with $n-p$ degrees of freedom. We emphasize that this is only true if the assumptions in Equation
-\@ref(eq:error-assumption-inference) are true.
+Thus, the null distribution of $T_j$ is a $t$ distribution with $n-p$ degrees of freedom. We emphasize that this is only true if the assumptions in Equation \@ref(eq:error-assumption-inference) are true.
 
 The p-value associated with this test is computed via the equation:
 
@@ -701,8 +668,7 @@ $$
 
 What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed test is $p\text{-value}=P(t_{n-p}\leq T_j)$ while the p-value for an upper-tailed test is $p\text{-value}=P(t_{n-p}\geq T_j)$.
 
-The fitted model
-$$
+The fitted model $$
 \begin{aligned}
 &E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
 &=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
@@ -716,25 +682,24 @@ $$
 H_0: &\beta_1 = 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R} \\
 H_a: &\beta_1 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R}.
 \end{aligned}
-$$
-R conveniently provides this information in the output of the `summary` function (specifically, the `coefficients` element if we don't want extra information). We extract this information from the `mlmod` object in the code below.
+$$ R conveniently provides this information in the output of the `summary` function (specifically, the `coefficients` element if we don't want extra information). We extract this information from the `mlmod` object in the code below.
 
 ```{r}
 summary(mlmod)$coefficients
 ```
+
 Moving from left to right, the first column (no name) indicates the coefficient term under consideration, the second column (`Estimate`) provides the estimated coefficients, the third column (`Std. Error`) provides the estimated standard error ($\hat{\mathrm{se}}(\hat{\beta}_j)$) for each coefficient, the fourth column (`t value`) provides the test statistic associated with testing $H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}$ versus a suitable alternative for each coefficient, while the final column (`Pr(>|t|)`) provides the two-tailed p-value associated with this test.
 
 Thus, for our test of the `body_mass_g` coefficient, the test statistic is $T_2 = 1.17$ and the associated p-value is 0.024. There is moderate evidence that the coefficient for `body_mass_g` differs from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
 
 # Hypothesis tests for multiple regression coefficients
 
-Suppose we have have a standard linear regression model with
-$p$ regression coefficients such as the one defined in Equation \@ref(eq:model-def-inference). We refer to this model as the "Complete Model".
+Suppose we have have a standard linear regression model with $p$ regression coefficients such as the one defined in Equation \@ref(eq:model-def-inference). We refer to this model as the "Complete Model".
 
 We want to compare the Complete Model to a "Reduced Model" that is a special case of the Complete Model. The most common examples of Reduced Model are:
 
-1. All of the coefficients except the intercept are set to zero.
-2. Some of the coefficients are set to zero.
+1.  All of the coefficients except the intercept are set to zero.
+2.  Some of the coefficients are set to zero.
 
 Less commonly considered examples of a Reduced Model set certain coefficients equal to each other or place other restrictions on the coefficients. We emphasize that the Reduced Model is a special case of the Complete Model. Alternatively, this relationship is sometimes described by saying the Reduced Model is *nested* in the Complete Model.
 
@@ -748,8 +713,7 @@ $H_a: \text{FM is a more appropriate model for describing the population.}$
 
 We wish to statistically assess whether we can simplify our model to $RM$. If $RM$ doesn't adequately explain the patterns of the data, then we will conclude that $FM$ is a more appropriate model.
 
-If we assume that the assumptions in Equation
-\@ref(eq:error-assumption-inference) are true for $RM$ and that $RM$ is the true model, then
+If we assume that the assumptions in Equation \@ref(eq:error-assumption-inference) are true for $RM$ and that $RM$ is the true model, then
 
 $$
 F=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\frac{RSS_{FM}}{df_{FM}}}=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\hat{\sigma}^2_{FM}}\sim F_{df_{RM}-df_{FM},df_{FM}}
@@ -761,12 +725,11 @@ The p-value for this test is
 
 $$
 p\text{-value}=P(F\geq F_{df_{RM}-df_{FM},df_{FM}}).
-$$
-We consider two common uses for this test below.`
+$$ We consider two common uses for this test below.\`
 
 **Test for a regression relationship**
 
----
+------------------------------------------------------------------------
 
 The most common test involving multiple parameters is to test whether *any* of the non-intercept regression coefficients different from zero.
 
@@ -774,16 +737,13 @@ The is known as the "test for a regression relationship".
 
 In this situation, the hypotheses to be tested may be stated as
 
-$H_0: E(Y \mid \mathbb{X}) = \beta_0$
-$H_a: E(Y\mid \mathbb{X})) = \beta_0 + X_1\beta_1 + \cdots + X_{p-1}\beta_{p-1}.$
+$H_0: E(Y \mid \mathbb{X}) = \beta_0$ $H_a: E(Y\mid \mathbb{X})) = \beta_0 + X_1\beta_1 + \cdots + X_{p-1}\beta_{p-1}.$
 
 Alternatively, we can state these hypotheses as
 
-$H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}$
-$H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}$.
+$H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}$ $H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}$.
 
-Notice that the Reduced Model in $H_0$ is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned are hypotheses on the intercept coefficient, $\beta_0$ being included in both models we are comparing.
-We want to choose between the models specified in $H_0$ and $H_a$.
+Notice that the Reduced Model in $H_0$ is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned are hypotheses on the intercept coefficient, $\beta_0$ being included in both models we are comparing. We want to choose between the models specified in $H_0$ and $H_a$.
 
 The $F$ statistic in Equation \@ref(eq:f-stat-lh) used for this test simplifies dramatically when performing a test for a regression relationship.Using a bit of calculus or by carefully using the OLS estimator of the regression coefficients, it is possible to show that for the Reduced Model that $\hat{\beta}_0=\bar{Y}$. Thus, for the $RSS_R = \sum_{i=1}^n (Y_i - \bar{Y})^2$, which is the definition of the TSS defined in Chapter \@ref(linear-model-estimation)! Then the numerator of our F statistic becomes $TSS - RSS_C$, which is mathematically equivalent to the regression sum of squares for the Complete Model. The degrees of freedom of $RSS_R = n - 1$. Similarly, the degrees of freedom of $RSS_C = n - p$. Thus $df_R - df_C = (n - 1) - (n - p) = p-1$. Thus, our F statistic for this test simplifies to
 
@@ -791,14 +751,11 @@ $$
 F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\sigma}^2_{CM}}.
 $$
 
-
-
 <!-- linear-model-estimation -->
-
 
 # Going Deeper
 
-**Manual calculation of the $t$-based confidence interval**
+**Manual calculation of the** $t$-based confidence interval
 
 Consider the summary of the fitted linear model below, which summarizes a first-order linear model fit to the `penguins` data earlier in this chapter.
 
@@ -840,17 +797,11 @@ The estimated standard errors of each coefficient are shown in the summary of th
 
 A alternative approach is to use 3 step process below:
 
-1.  Use the `vcov` function to obtain the estimated variance matrix of
-    $\hat{\boldsymbol{\beta}}$, i.e.,
-    $\hat{\mathrm{var}}(\hat{\boldsymbol{\beta}})$.
-2.  Use the `diag` function to extract the diagonal elements of this
-    matrix, which gives us
-    $\hat{\mathrm{var}}(\hat{\beta}_0), \hat{\mathrm{var}}(\hat{\beta}_1), \ldots, \hat{\mathrm{var}}(\hat{\beta}_{p-1})$.
-3.  Use the `sqrt` function to calculate the estimated standard errors
-    from the estimated variances of the estimated coefficients.
+1.  Use the `vcov` function to obtain the estimated variance matrix of $\hat{\boldsymbol{\beta}}$, i.e., $\hat{\mathrm{var}}(\hat{\boldsymbol{\beta}})$.
+2.  Use the `diag` function to extract the diagonal elements of this matrix, which gives us $\hat{\mathrm{var}}(\hat{\beta}_0), \hat{\mathrm{var}}(\hat{\beta}_1), \ldots, \hat{\mathrm{var}}(\hat{\beta}_{p-1})$.
+3.  Use the `sqrt` function to calculate the estimated standard errors from the estimated variances of the estimated coefficients.
 
-We use this process in the code below, which returns the same estimated
-standard errors we previously obtained.
+We use this process in the code below, which returns the same estimated standard errors we previously obtained.
 
 ```{r}
 # 2nd approach to obtaining estimated standard errors
@@ -866,18 +817,15 @@ data.frame(lb = betahats - mult * sehats,
 
 **Details about estimation of the mean response**
 
----
+------------------------------------------------------------------------
 
-Consider the estimated mean response for a specific combination of
-regressor values, denoted by $\mathbf{x}_0$, so that:
+Consider the estimated mean response for a specific combination of regressor values, denoted by $\mathbf{x}_0$, so that:
 
 $$
 \hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}
 $$
 
-Using some of the matrix-related results from Appendix
-\@ref(prob-review) and the result in Equation \@ref(eq:prop-betahat), we
-can determine that:
+Using some of the matrix-related results from Appendix \@ref(prob-review) and the result in Equation \@ref(eq:prop-betahat), we can determine that:
 
 $$
 \begin{aligned}
@@ -887,39 +835,24 @@ $$
 \end{aligned}
 $$
 
-To get the simplest expression for the confidence interval for
-$E(Y\mid\mathbf{x}_0)$, we have to make a number of connections that are often glossed over. We discuss them explicitly. Since the error
-variance, $\sigma^2$, in Equation \@ref(eq:var-est-mean-response) isn't
-known, we replace it with the typical estimator
-$\hat{\sigma}^2=RSS/(n-p)$ to get:
+To get the simplest expression for the confidence interval for $E(Y\mid\mathbf{x}_0)$, we have to make a number of connections that are often glossed over. We discuss them explicitly. Since the error variance, $\sigma^2$, in Equation \@ref(eq:var-est-mean-response) isn't known, we replace it with the typical estimator $\hat{\sigma}^2=RSS/(n-p)$ to get:
 
 $$
 \hat{\mathrm{var}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0
 $$
 
-
-The standard error of an estimator is the standard deviation of the
-estimator's variance, so we have
-$\mathrm{se}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$.
-Similarly, we have that the estimated standard error for
-$\hat{E}(Y\mid \mathbf{x}_0)$ is
-$\hat{\mathrm{se}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$.
-Taking the square root of Equation \@ref(eq:est-var-mean), we see that:
+The standard error of an estimator is the standard deviation of the estimator's variance, so we have $\mathrm{se}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$. Similarly, we have that the estimated standard error for $\hat{E}(Y\mid \mathbf{x}_0)$ is $\hat{\mathrm{se}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$. Taking the square root of Equation \@ref(eq:est-var-mean), we see that:
 
 $$
 \hat{\mathrm{se}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)=\hat{\sigma} \sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 $$
 
-Additionally, since $E(Y\mid \mathbf{x}_0)$ is an (unknown) constant, we
-also have that:
+Additionally, since $E(Y\mid \mathbf{x}_0)$ is an (unknown) constant, we also have that:
 
 $$\mathrm{var}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)=\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right).
 $$
 
-If we divide the estimation error of the mean response, i.e.,
-$E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated
-standard deviation, then we obtain a pivotal quantity. More
-specifically, we have:
+If we divide the estimation error of the mean response, i.e., $E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated standard deviation, then we obtain a pivotal quantity. More specifically, we have:
 
 $$
 \frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
@@ -927,25 +860,23 @@ $$
 
 **Manual calculation of confidence intervals for the mean response**
 
----
+------------------------------------------------------------------------
 
-We discuss manual computation of the estimated mean response and associated confidence interval for a particular
-combination of regressor values based on the `penguins` example discussed in Section \@ref(parametric-ci-mean-response).
+We discuss manual computation of the estimated mean response and associated confidence interval for a particular combination of regressor values based on the `penguins` example discussed in Section \@ref(parametric-ci-mean-response).
 
-Specifically, we estimate the mean response for the fitted parallel
-lines model given by$$
+Specifically, we estimate the mean response for the fitted parallel lines model given by$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
 \end{aligned}
-$$
-where $D_C$ and $D_G$ denote the indicator variables for the `Chinstrap` and `Gentoo` levels of the `species` variable. This fitted model is stored in `lmodp`. The estimated coefficients are shown in the code below.
+$$ where $D_C$ and $D_G$ denote the indicator variables for the `Chinstrap` and `Gentoo` levels of the `species` variable. This fitted model is stored in `lmodp`. The estimated coefficients are shown in the code below.
 
 ```{r}
 coef(lmodp)
 ```
 
 We want to estimate the mean response for the following combination of predictors stored in the `newpenguins` data frame, which is printed in the code below.
+
 ```{r}
 # mean body_mass_g of each species
 newpenguins
@@ -953,8 +884,8 @@ newpenguins
 
 We want to use the `newpenguins` data frame to generate the matrix of regressors used to estimate the associated mean responses. We can create the matrix of regressors using the `model.matrix` function. The main arguments of `model.matrix` are:
 
-- `object`: an object of the appropriate class. In our case, it is a formula or fitted model.
-- `data`: a data frame with the predictors needed to construct the matrix.
+-   `object`: an object of the appropriate class. In our case, it is a formula or fitted model.
+-   `data`: a data frame with the predictors needed to construct the matrix.
 
 We need only the right side of the formula used to fit the model in `lmodp` to create our matrix of regressor values. We can use the `formula` function to extract the formula used to fit `lmodp`. We then use `model.matrix` to create the matrix of regressor by values needed for estimating the mean. The matrix produced by `model.matrix`, `X0`, includes a column for the intercept term and the indicator variables in `lmodp`.
 
@@ -964,7 +895,9 @@ formula(lmodp)
 # create matrix of regressor values from newpenguins
 (X0 <- model.matrix(~ body_mass_g + species, data = newpenguins))
 ```
+
 We can obtain the estimated mean by taking the product of `X0` and the estimated coefficients for `lmodp`. We assign the estimated mean responses the name `est_means`.
+
 ```{r}
 (est_means <- X0 %*% coef(lmodp))
 ```
@@ -983,14 +916,18 @@ sigmahat <- sigma(lmodp)
 # scalable computation of estimated standard errors
 (sehat <- sigmahat * sqrt(diag(X0 %*% solve(crossprod(X), t(X0)))))
 ```
-To finish the computation of our confidence intervals, we determine the correct multiplier, $t_{n-p}^{\alpha/2}$. For a 98% confidence interval, $\alpha = 0.02$ and $\alpha/2 = 0.01$.  The degrees of freedom, $n-p$, is 338 (as shown in the code below). So the multiplier can be represented as $t_{338}^{0.01}$, which is the $0.99$ quantile of a $t$ distribution with 338 degrees of freedom. We provide this information to the `qt` function, which provides the quantiles of a $t$ distribution, using the code below to get the correct multiplier.
+
+To finish the computation of our confidence intervals, we determine the correct multiplier, $t_{n-p}^{\alpha/2}$. For a 98% confidence interval, $\alpha = 0.02$ and $\alpha/2 = 0.01$. The degrees of freedom, $n-p$, is 338 (as shown in the code below). So the multiplier can be represented as $t_{338}^{0.01}$, which is the $0.99$ quantile of a $t$ distribution with 338 degrees of freedom. We provide this information to the `qt` function, which provides the quantiles of a $t$ distribution, using the code below to get the correct multiplier.
+
 ```{r}
 # degrees of freedom, n-p
 df.residual(lmodp)
 # multiplier for confidence interval
 (mult <- qt(0.99, df = df.residual(lmodp)))
 ```
+
 Thus, our 98% confidence intervals for each mean response can be computed using the code below, which matches the results we obtained in Section \@ref(parametric-ci-mean-response).
+
 ```{r}
 data.frame(lb = est_means - mult * sehat,
            ub = est_means + mult * sehat)
@@ -1021,7 +958,7 @@ $$
 \end{aligned}
 $$
 
-Recall from Appendix \@ref(prob-review) that the variance of a constant plus a random variable is equal to the variance of the random variable (since a constant doesn't vary!). Thus, Equation \@ref(eq:var-pred-error1) simplifies to: \
+Recall from Appendix \@ref(prob-review) that the variance of a constant plus a random variable is equal to the variance of the random variable (since a constant doesn't vary!). Thus, Equation \@ref(eq:var-pred-error1) simplifies to:\
 
 $$
 \mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}})
@@ -1039,7 +976,7 @@ $$
 \end{aligned}
 $$
 
-The covariance term in the final line of Equation \@ref(eq:var-pred-error3) is 0 because $\epsilon(\mathbf{x}_0)$ and $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ are uncorrelated. Why are they uncorrelated? Recall that $\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n$ are uncorrelated. Also, recall that  $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$. Since $\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]$ and $Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i$ for $i=1,2,\ldots,n$, the "randomness" of $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ comes from $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$. Since $\epsilon(\mathbf{x}_0)$ is uncorrelated with $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$, we conclude that  $\epsilon(\mathbf{x}_0)$ and $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ are uncorrelated, so their covariance is zero. Thus, we have:
+The covariance term in the final line of Equation \@ref(eq:var-pred-error3) is 0 because $\epsilon(\mathbf{x}_0)$ and $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ are uncorrelated. Why are they uncorrelated? Recall that $\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n$ are uncorrelated. Also, recall that $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$. Since $\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]$ and $Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i$ for $i=1,2,\ldots,n$, the "randomness" of $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ comes from $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$. Since $\epsilon(\mathbf{x}_0)$ is uncorrelated with $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$, we conclude that $\epsilon(\mathbf{x}_0)$ and $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ are uncorrelated, so their covariance is zero. Thus, we have:
 
 $$
 \begin{aligned}
@@ -1072,18 +1009,16 @@ $$
 
 # References
 
-
-Bonferroni, Carlo. 1936. "Teoria Statistica Delle Classi e Calcolo Delle Probabilita." Pubblicazioni Del R Istituto Superiore Di Scienze Economiche e Commericiali Di Firenze 8: 3–62.
+Bonferroni, Carlo. 1936. "Teoria Statistica Delle Classi e Calcolo Delle Probabilita." Pubblicazioni Del R Istituto Superiore Di Scienze Economiche e Commericiali Di Firenze 8: 3--62.
 
 Boole, George. 1847. The Mathematical Analysis of Logic. Philosophical Library.
 
 Kutner, Michael H, Christopher J Nachtsheim, John Neter, and William Li. 2005. Applied Linear Statistical Models, 5th Edition. McGraw-Hill/Irwin, New York.
 
-Mi, Jie, and Allan R. Sampson. 1993. "A Comparison of the Bonferroni and Scheffé Bounds." Journal of Statistical Planning and Inference 36 (1): 101–5. https://doi.org/https://doi.org/10.1016/0378-3758(93)90105-F.
+Mi, Jie, and Allan R. Sampson. 1993. "A Comparison of the Bonferroni and Scheffé Bounds." Journal of Statistical Planning and Inference 36 (1): 101--5. https://doi.org/https://doi.org/10.1016/0378-3758(93)90105-F.
 
 Wasserman, Larry. 2004. All of Statistics: A Concise Course in Statistical Inference. Vol. 26. Springer.
 
 Weisberg, Sanford. 2014. Applied Linear Regression. Fourth. Hoboken NJ: Wiley. http://z.umn.edu/alr4ed.
 
-Working, Holbrook, and Harold Hotelling. 1929. "Applications of the Theory of Error to the Interpretation of Trends." Journal of the American Statistical Association 24 (165A): 73–85. https://doi.org/10.1080/01621459.1929.10506274.
-
+Working, Holbrook, and Harold Hotelling. 1929. "Applications of the Theory of Error to the Interpretation of Trends." Journal of the American Statistical Association 24 (165A): 73--85. https://doi.org/10.1080/01621459.1929.10506274.
