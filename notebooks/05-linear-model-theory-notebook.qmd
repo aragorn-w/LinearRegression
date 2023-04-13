@@ -14,11 +14,9 @@ wrap: 'none'
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/05-linear-model-theory-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
-</a>
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/05-linear-model-theory-notebook.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg"/> </a>
 
----
+------------------------------------------------------------------------
 
 # Basic theoretical results for linear models
 
@@ -36,10 +34,9 @@ $$
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}.
 $$
 
-
 # Standard assumptions
 
-We assume that the components of our linear model have the characteristics previously described in Chapter 3. We also need to make several specific assumptions about the errors. 
+We assume that the components of our linear model have the characteristics previously described in Chapter 3. We also need to make several specific assumptions about the errors.
 
 **Error Assumption 1**
 
@@ -59,13 +56,13 @@ where "$\mid \mathbf{X}$" is notation meaning "conditional on knowing the regres
 
 **Error Assumption 2**
 
-The errors have constant variances and are uncorrelated, conditional on knowing the regressors, i.e., 
+The errors have constant variances and are uncorrelated, conditional on knowing the regressors, i.e.,
 
 $$
 \mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i) = \sigma^2, \quad i=1,2,\ldots,n.
 $$
 
-and 
+and
 
 $$
 \mathrm{cov}(\epsilon_i, \epsilon_j\mid \mathbf{X}) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.
@@ -85,17 +82,17 @@ $$
 \epsilon_i \sim F, i=1,2,\ldots,n,
 $$
 
-where $F$ is some arbitrary distribution. 
+where $F$ is some arbitrary distribution.
 
 **Error Assumption 4**
 
-In practice, it is common to assume the errors have a normal (Gaussian) distribution. 
+In practice, it is common to assume the errors have a normal (Gaussian) distribution.
 
 **Assumptions 1-4 combined**
 
-Two uncorrelated normal random variables are also independent (but this is not generally true for other distributions). 
+Two uncorrelated normal random variables are also independent (but this is not generally true for other distributions).
 
-Putting assumptions 1-4 together, we have that 
+Putting assumptions 1-4 together, we have that
 
 $$
 \epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} \mathsf{N}(0, \sigma^2),
@@ -109,27 +106,27 @@ $$
 
 In summary, our error assumptions are:
 
-1. $E(\epsilon_i \mid \mathbb{X}=\mathbf{x}_i)=0$ for $i=1,2,\ldots,n$.
-1. $\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i)=\sigma^2$ for $i=1,2,\ldots,n$.
-1. $\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbf{X})=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$.
-1. $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$.
+1.  $E(\epsilon_i \mid \mathbb{X}=\mathbf{x}_i)=0$ for $i=1,2,\ldots,n$.
+2.  $\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i)=\sigma^2$ for $i=1,2,\ldots,n$.
+3.  $\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbf{X})=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$.
+4.  $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$.
 
 **Summary of results**
 
----
+------------------------------------------------------------------------
 
 Combining these results with our linear model, we have:
 
-1. $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
-1. $\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
-1. $\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}))$, where $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
-1. $\hat{\boldsymbol{\beta}}$ has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ with the additional assumptions that the model is correct and $\mathbf{X}$ is full-rank.
+1.  $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
+2.  $\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
+3.  $\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}))$, where $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
+4.  $\hat{\boldsymbol{\beta}}$ has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ with the additional assumptions that the model is correct and $\mathbf{X}$ is full-rank.
 
 We prove these results in the sections below. To simplify the derivations below, we let $\mathbf{I}=\mathbf{I}_{n\times n}$.
 
-**Results for $\mathbf{y}$**
+**Results for** $\mathbf{y}$
 
----
+------------------------------------------------------------------------
 
 For our given linear model and under the assumptions summarized previously, our response variable has mean
 
@@ -140,18 +137,18 @@ $$
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
@@ -160,31 +157,29 @@ E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\ma
 &=\mathbf{X}\boldsymbol{\beta}.&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
 \end{aligned}
 $$
-
 :::
 
 $\vphantom{blank}$
 
-For the variance of the response: 
+For the variance of the response:
 
 $$
 \mathrm{var}(\mathbf{y}\mid \mathbf{X})=\sigma^2 \mathbf{I}.
-$$
-*Proof:*
+$$ *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
@@ -192,12 +187,11 @@ $$
 &=\sigma^2\mathbf{I}.&\tiny\text{(by assumption)}
 \end{aligned}
 $$
-
 :::
 
 $\vphantom{blank}$
 
-The response variable has the following distribution: 
+The response variable has the following distribution:
 
 $$
 \mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).
@@ -206,32 +200,31 @@ $$
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
+
 ::: {.content-hidden unless-format="pdf"}
+We have shown that:
 
-We have shown that: 
-
-* $E(\mathbf{y}\mid \mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$.
-* $\mathrm{var}(\mathbf{y}\mathbf{X}) = \sigma^2 \mathbf{I}$.
+-   $E(\mathbf{y}\mid \mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$.
+-   $\mathrm{var}(\mathbf{y}\mathbf{X}) = \sigma^2 \mathbf{I}$.
 
 Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, then $\mathbf{y}$ must also have a multivariate normal distribution.
 :::
 
 $\vphantom{blank}$
 
+**Results for** $\hat{\boldsymbol{\beta}}$
 
-**Results for $\hat{\boldsymbol{\beta}}$**
-
----
+------------------------------------------------------------------------
 
 The OLS estimator for $\boldsymbol{\beta}$ is
 
@@ -248,16 +241,17 @@ $$
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
+
 ::: {.content-hidden unless-format="pdf"}
 We previously derived the following results,
 
@@ -280,7 +274,6 @@ E(\hat{\boldsymbol{\beta}}|\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X
 &=\boldsymbol\beta.
 \end{aligned}
 $$
-
 :::
 
 $\vphantom{blah}$
@@ -294,18 +287,18 @@ $$
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \text{var}(\hat{\boldsymbol\beta}|\mathbf{X})&=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(by OLS formula)}\\
@@ -316,8 +309,8 @@ $$
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplification)}
 \end{aligned}
 $$
-
 :::
+
 $\vphantom{blah}$
 
 The OLS estimator $\hat{\boldsymbol{\beta}}$ has the following distribution:
@@ -326,33 +319,31 @@ $$
 \hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
 $$
 
-
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
-Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
+::: {.content-hidden unless-format="pdf"}
+Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance,
 
 $$
 \hat{\boldsymbol\beta}|\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
 $$
-
 :::
 
 **Results for the residuals**
 
----
+------------------------------------------------------------------------
 
 The residual vector can be expressed in various equivalent ways, such as
 
@@ -380,23 +371,24 @@ $$
 \end{aligned}
 $$
 
-The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. 
+The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$.
 
 The hat matrix $\mathbf{H}$ is symmetric and idempotent.
 
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
+
 ::: {.content-hidden unless-format="pdf"}
 Notice that:
 
@@ -426,7 +418,6 @@ $$
 $$
 
 Therefore, $\mathbf{H}$ is idempotent.
-
 :::
 
 The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
@@ -434,18 +425,18 @@ The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 First, notice that:
 
 $$
@@ -476,22 +467,21 @@ $$
 E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}.
 $$
 
-
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
@@ -504,11 +494,9 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\
 &=\mathbf{0}_{n\times1}.&\tiny\text{(simplification)}
 \end{aligned}
 $$
-
 :::
 
 $\vphantom{blank}$
-
 
 The residuals have variance
 
@@ -516,22 +504,21 @@ $$
 \mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I} - \mathbf{H}).
 $$
 
-
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
@@ -541,7 +528,6 @@ $$
 &=\sigma^2(\mathbf{I}-\mathbf{H}).&\tiny(\mathbf{I}-\mathbf{H}\text{ is idempotent)}
 \end{aligned}
 $$
-
 :::
 
 The residuals have the following distribution:
@@ -550,28 +536,25 @@ $$
 \hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H})).
 $$
 
-
-
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
-Since $\hat{\boldsymbol{\epsilon}}$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
+::: {.content-hidden unless-format="pdf"}
+Since $\hat{\boldsymbol{\epsilon}}$ is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
 :::
 
 $\vphantom{blank}$
-
 
 The RSS can be represented as
 
@@ -579,22 +562,21 @@ $$
 RSS=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.
 $$
 
-
 *Proof:*
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>\
+</br>
 :::
-::: {.content-hidden unless-format="pdf"}
 
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matrix representation of RSS)}\\
@@ -604,7 +586,6 @@ RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matr
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.&\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
 \end{aligned}
 $$
-
 :::
 
 # The Gauss-Markov Theorem
@@ -615,14 +596,14 @@ $$
 \mathbf{y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
 $$
 
-Assume that 
+Assume that
 
-1. $E(\boldsymbol{\epsilon}\mid \mathbf{X}) = \boldsymbol{0}_{n\times1}$.
-1. $\mathrm{var}(\boldsymbol{\epsilon}\mid \mathbf{X}) = \sigma^2 \mathbf{I}$, i.e., the errors have constant variance and are uncorrelated.
-1. $E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}$.
-1. $\mathbf{X}$ is a full-rank matrix.
+1.  $E(\boldsymbol{\epsilon}\mid \mathbf{X}) = \boldsymbol{0}_{n\times1}$.
+2.  $\mathrm{var}(\boldsymbol{\epsilon}\mid \mathbf{X}) = \sigma^2 \mathbf{I}$, i.e., the errors have constant variance and are uncorrelated.
+3.  $E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}$.
+4.  $\mathbf{X}$ is a full-rank matrix.
 
-Then the **Gauss-Markov** Theorem states that the OLS estimator of $\boldsymbol{\beta}$, 
+Then the **Gauss-Markov** Theorem states that the OLS estimator of $\boldsymbol{\beta}$,
 
 $$
 \hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y},
@@ -632,10 +613,10 @@ has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ a
 
 Some comments:
 
-- Assumption 3 guarantees that we have hypothesized the correct model, i.e., that we have included exactly the correct regressors in our model. Not only are we fitting a linear model to the data, but our hypothesized model is actually correct.
-- Assumption 4 ensures that the OLS estimator can be computed (otherwise, there is no unique solution).
-- The Gauss-Markov theorem only applies to unbiased estimators of $\boldsymbol{\beta}$. Biased estimators could have a smaller variance.
-- The Gauss-Markov theorem states that no unbiased estimator of $\boldsymbol{\beta}$ can have a smaller variance than $\hat{\boldsymbol{\beta}}$.
-- The OLS estimator uniquely has the minimum variance property, meaning that if $\tilde{\boldsymbol{\beta}}$ is another unbiased estimator of $\boldsymbol{\beta}$ and $\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})$, then in fact the two estimators are identical and $\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}$.
+-   Assumption 3 guarantees that we have hypothesized the correct model, i.e., that we have included exactly the correct regressors in our model. Not only are we fitting a linear model to the data, but our hypothesized model is actually correct.
+-   Assumption 4 ensures that the OLS estimator can be computed (otherwise, there is no unique solution).
+-   The Gauss-Markov theorem only applies to unbiased estimators of $\boldsymbol{\beta}$. Biased estimators could have a smaller variance.
+-   The Gauss-Markov theorem states that no unbiased estimator of $\boldsymbol{\beta}$ can have a smaller variance than $\hat{\boldsymbol{\beta}}$.
+-   The OLS estimator uniquely has the minimum variance property, meaning that if $\tilde{\boldsymbol{\beta}}$ is another unbiased estimator of $\boldsymbol{\beta}$ and $\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})$, then in fact the two estimators are identical and $\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}$.
 
 We do not prove this theorem.
