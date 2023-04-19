@@ -232,7 +232,7 @@ However, it is important to note that even if the errors have constant variance,
 
 Even if the variance of the errors is constant,
 
-$$\mathrm{var}(\hat{\epsilon}_i) = \frac{\sigma^2}{\sqrt{1-h_i}}, \quad i = 1,2,\ldots,n,$$
+$$\mathrm{var}(\hat{\epsilon}_i) = \sigma^2(1-h_i), \quad i = 1,2,\ldots,n,$$
 
 where $h_i=\mathbf{H}_{i,i}$ is $i$th diagonal element of the hat matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
 
