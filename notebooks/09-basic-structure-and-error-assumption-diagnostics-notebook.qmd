@@ -208,8 +208,7 @@ A different residual plot is shown below.
 #| echo: false
 #| eval: true
 #| output: true
-plot(residuals(lmod3a) ~ fitted(lmod3a),
-     xlab = "fitted values", ylab = "residuals")
+plot(residuals(lmod3a) ~ fitted(lmod3a), xlab = "fitted values", ylab = "residuals")
 abline(h = 0, lty = 2, col = "grey")
 ```
 

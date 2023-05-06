@@ -332,7 +332,7 @@ plot(rs, scale = "bic")
 
 The model that includes the intercept, `lcavol`, `lweight`, and `sviinvasive` minimizes the BIC criterion.
 
-**Stepwise selection adn forward selection with AIC and BIC `prostate` example**
+**Stepwise selection and forward selection with AIC and BIC `prostate` example**
 
 ------------------------------------------------------------------------
 
