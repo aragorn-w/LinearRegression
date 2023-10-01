@@ -344,7 +344,7 @@ Suppose we want to rent a new apartment or buy a new house. If we look through t
 
 It is common to distinguish the two scenarios by using the terminology:
 
--   "Estimating the mean response" to refer to prediction of the the mean.
+-   "Estimating the mean response" to refer to prediction of the mean.
 -   "Prediction a new response" when we want to predict a new observation.
 
 # Confidence interval for the mean response

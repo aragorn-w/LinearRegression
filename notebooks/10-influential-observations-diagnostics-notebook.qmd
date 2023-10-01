@@ -258,7 +258,7 @@ An **influential observation** dramatically changes the fitted model based on wh
 
 Measures of influence are often related to various LOO statistics.
 
--   The LOO residuals, $d_1, d_2, \ldots, d_n$, where \$l_i = Y_i - \hat{Y}\_{i(i)}.
+-   The LOO residuals, $d_1, d_2, \ldots, d_n$, where $l_i = Y_i - \hat{Y}_{i(i)}$.
 -   The LOO estimates of error variance, $\hat{\sigma}^2_{(1)}, \hat{\sigma}^2_{(2)}, \ldots, \hat{\sigma}^2_{(n)}$.
 
 Two other measures we haven't yet discussed are the DFBETA and DFFITS.
